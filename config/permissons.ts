@@ -1,4 +1,9 @@
 export const ALL_PERMISSIONS = [
+  // system admin permission
+  "system:write",
+  "system:read",
+  "system:edit",
+  "system:delete",
   // user management
   "users:roles:write", // allow to add a role to a user
   "users:roles:delete", // allow to delete a role to a user
@@ -8,6 +13,10 @@ export const ALL_PERMISSIONS = [
   "app:edit",
   "app:delete",
 ] as const;
+
+// Create a mutable copy of ALL_PERMISSIONS
+export const MUTABLE_ALL_PERMISSIONS: Array<(typeof ALL_PERMISSIONS)[number]> =
+  [...ALL_PERMISSIONS];
 
 export const PERMISSIONS = ALL_PERMISSIONS.reduce((acc, cur) => {
   acc[cur] = cur;

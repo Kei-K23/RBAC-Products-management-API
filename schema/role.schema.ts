@@ -12,7 +12,7 @@ export const createRoleSchema = z.object({
         required_error: "application id is requried",
       })
       .uuid("invalid application id"),
-    permissions: z.array(z.enum(ALL_PERMISSIONS)),
+    permissions: z.array(z.enum([...ALL_PERMISSIONS])),
   }),
 });
 
