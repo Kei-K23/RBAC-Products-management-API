@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface RolesDocument extends mongoose.Document {
-  roleName: string;
+  name: string;
   applicationId: mongoose.ObjectId;
   permissions: Array<string>;
 }
@@ -10,14 +10,14 @@ interface RolesModel extends mongoose.Model<RolesDocument> {}
 
 const rolesSchema = new mongoose.Schema<RolesDocument, RolesModel>(
   {
-    roleName: {
+    name: {
       type: String,
       required: true,
       min: [3, "role name must be at least contain 3 characters"],
       validate: {
         validator: async function (value: string) {
           const roleExist = await RolesModel.findOne({
-            roleName: value,
+            name: value,
           });
 
           if (roleExist) return false;
@@ -29,6 +29,7 @@ const rolesSchema = new mongoose.Schema<RolesDocument, RolesModel>(
     applicationId: {
       type: mongoose.Types.ObjectId,
       required: true,
+      ref: "Applications",
     },
     permissions: {
       type: [],

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface ApplicationsDocument extends mongoose.Document {
-  applicationName: string;
+  name: string;
 }
 
 interface ApplicationModel extends mongoose.Model<ApplicationsDocument> {}
@@ -11,14 +11,14 @@ const applicationsSchema = new mongoose.Schema<
   ApplicationModel
 >(
   {
-    applicationName: {
+    name: {
       type: String,
       required: true,
       min: [5, "application name must be at least contain 5 characters"],
       validate: {
         validator: async function (value: string) {
           const applicationExist = await ApplicationsModel.findOne({
-            applicationName: value,
+            name: value,
           });
 
           if (applicationExist) return false;

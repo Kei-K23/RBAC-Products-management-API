@@ -3,7 +3,7 @@ import { ALL_PERMISSIONS } from "../config/permissons";
 
 export const createRoleSchema = z.object({
   body: z.object({
-    roleName: z.string({
+    name: z.string({
       required_error: "role name is required!",
       invalid_type_error: "role name should be string",
     }),
