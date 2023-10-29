@@ -7,11 +7,9 @@ export const createRoleSchema = z.object({
       required_error: "role name is required!",
       invalid_type_error: "role name should be string",
     }),
-    applicationId: z
-      .string({
-        required_error: "application id is requried",
-      })
-      .uuid("invalid application id"),
+    applicationId: z.string({
+      required_error: "application id is requried",
+    }),
     permissions: z.array(z.enum([...ALL_PERMISSIONS])),
   }),
 });

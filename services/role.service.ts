@@ -9,3 +9,22 @@ export async function createRole(payload: CreateRoleInput) {
     throw new Error(e.message.toString());
   }
 }
+
+export async function getRoleByName({
+  name,
+  applicationId,
+}: {
+  name: string;
+  applicationId: string;
+}) {
+  try {
+    const role = await RolesModel.findOne({
+      name,
+      applicationId,
+    });
+    if (!role) return false;
+    return role;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}

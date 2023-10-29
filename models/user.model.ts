@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import argon2 from "argon2";
 
-export interface UsersDocument extends mongoose.Document {
+interface UsersDocument extends mongoose.Document {
   name: string;
   applicationId: mongoose.ObjectId;
   email: string;
@@ -14,6 +14,15 @@ interface UsersModel extends mongoose.Model<UsersDocument> {
     password: string
   ) => Promise<boolean>;
 }
+
+interface AssignRoleToUserDocument extends mongoose.Document {
+  userId: string;
+  applicationId: string;
+  roleId: string;
+}
+
+interface AssignRoleToUserModel
+  extends mongoose.Model<AssignRoleToUserDocument> {}
 
 const usersSchema = new mongoose.Schema<UsersDocument, UsersModel>(
   {
@@ -63,7 +72,35 @@ usersSchema.static(
   }
 );
 
+const assignRoleToUserSchema = new mongoose.Schema<
+  AssignRoleToUserDocument,
+  AssignRoleToUserModel
+>(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    applicationId: {
+      type: String,
+      required: true,
+    },
+    roleId: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 export const UsersModel = mongoose.model<UsersDocument, UsersModel>(
-  "Roles",
+  "Users",
   usersSchema
 );
+
+export const AssingRoleToUserModel = mongoose.model<
+  AssignRoleToUserDocument,
+  AssignRoleToUserModel
+>("AssignRoleToUser", assignRoleToUserSchema);

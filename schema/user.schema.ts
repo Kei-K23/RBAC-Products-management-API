@@ -16,11 +16,9 @@ export const createUserSchema = z.object({
       confirm_password: z
         .string({ required_error: "confirm password is required" })
         .min(6, "confirm password must be at least 6 character long"),
-      applicationId: z
-        .string({
-          required_error: "application id is requried",
-        })
-        .uuid("invalid application id"),
+      applicationId: z.string({
+        required_error: "application id is requried",
+      }),
     })
     .refine((data) => data.password === data.confirm_password, {
       message: "confirm password does not match with password",
@@ -30,25 +28,22 @@ export const createUserSchema = z.object({
 
 export const assignRoleToUserSchema = z.object({
   body: z.object({
-    applicationId: z
-      .string({
-        required_error: "application id is requried",
-      })
-      .uuid("invalid application id"),
-    userId: z
-      .string({
-        required_error: "user id is requried",
-      })
-      .uuid("invalid user id"),
-    roleId: z
-      .string({
-        required_error: "role id is requried",
-      })
-      .uuid("invalid role id"),
+    applicationId: z.string({
+      required_error: "application id is requried",
+    }),
+    userId: z.string({
+      required_error: "user id is requried",
+    }),
+    roleId: z.string({
+      required_error: "role id is requried",
+    }),
   }),
 });
 
-export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+export type CreateUserInput = Omit<
+  TypeOf<typeof createUserSchema>["body"],
+  "confirm_password"
+>;
 export type AssignRoleToUserInput = TypeOf<
   typeof assignRoleToUserSchema
 >["body"];
