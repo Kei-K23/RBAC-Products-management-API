@@ -12,9 +12,9 @@ export async function createUser(payload: CreateUserInput) {
   }
 }
 
-export async function getUsers(applicationId: string) {
+export async function getAllUsers() {
   try {
-    const users = await UsersModel.find({ applicationId });
+    const users = await UsersModel.find();
     if (!users.length) return false;
     return users;
   } catch (e: any) {
@@ -22,7 +22,7 @@ export async function getUsers(applicationId: string) {
   }
 }
 
-export async function AssignRoleTOUserfn({
+export async function AssignRoleToUserfn({
   applicationId,
   userId,
   roleId,
@@ -35,18 +35,15 @@ export async function AssignRoleTOUserfn({
     let roleName = SYSTEM_ROLE.SUPER_ADMIN;
 
     const applicationUsers = await getUserByApplicationId(applicationId);
-
-    if (applicationUsers && applicationUsers.length > 0) {
+    if (applicationUsers && applicationUsers.length > 1) {
       roleName = SYSTEM_ROLE.APPLICATION_USER;
     }
-
     const role = await getRoleByName({
       name: roleName,
       applicationId,
     });
 
     const role_id = roleId ? roleId : role && role._id;
-
     const assignRoleToUser = await AssingRoleToUserModel.create({
       applicationId,
       userId,

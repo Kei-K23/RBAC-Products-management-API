@@ -44,8 +44,8 @@ export async function getApplicationsHandler(req: Request, res: Response) {
   try {
     const applications = await getApplications();
 
-    if (!applications)
-      return res.status(400).json({ error: "no application to provide" });
+    if (applications && applications.length <= 0)
+      return res.status(400).json({ error: "no application to provide" }).end();
 
     return res
       .status(200)
