@@ -1,7 +1,12 @@
+import { FilterQuery } from "mongoose";
 import { SYSTEM_ROLE } from "../config/permissons";
-import { AssingRoleToUserModel, UsersModel } from "../models/user.model";
+import {
+  AssignRoleToUserDocument,
+  AssingRoleToUserModel,
+  UsersModel,
+} from "../models/user.model";
 import { CreateUserInput } from "../schema/user.schema";
-import { getRoleByName } from "./role.service";
+import { getRoleById, getRoleByName } from "./role.service";
 
 export async function createUser(payload: CreateUserInput) {
   try {
@@ -30,9 +35,22 @@ export async function getUserByEmailAndApplicationId({
   applicationId: string;
 }) {
   try {
-    const user = await UsersModel.findOne({ email, applicationId });
+    const user = await UsersModel.findOne({ email, applicationId }).lean();
+
     if (!user) return false;
-    return user;
+
+    const assignRoleToUser = await getUserFromAssignRoleToUser({
+      userId: user._id,
+      applicationId: user.applicationId,
+    });
+
+    if (!assignRoleToUser) return false;
+
+    const role = await getRoleById({ id: assignRoleToUser.roleId });
+
+    if (!role) return false;
+
+    return { ...user, permissions: role.permissions, roleId: role._id };
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
@@ -74,6 +92,18 @@ export async function AssignRoleToUserfn({
 export async function getUserByApplicationId(applicationId: string) {
   try {
     const user = await UsersModel.find({ applicationId });
+    if (!user) return false;
+    return user;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function getUserFromAssignRoleToUser(
+  filter: FilterQuery<AssignRoleToUserDocument>
+) {
+  try {
+    const user = await AssingRoleToUserModel.findOne(filter);
     if (!user) return false;
     return user;
   } catch (e: any) {

@@ -15,7 +15,7 @@ interface UsersModel extends mongoose.Model<UsersDocument> {
   ) => Promise<boolean>;
 }
 
-interface AssignRoleToUserDocument extends mongoose.Document {
+export interface AssignRoleToUserDocument extends mongoose.Document {
   userId: string;
   applicationId: string;
   roleId: string;

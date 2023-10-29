@@ -28,3 +28,13 @@ export async function getRoleByName({
     throw new Error(e.message.toString());
   }
 }
+
+export async function getRoleById({ id }: { id: string }) {
+  try {
+    const role = await RolesModel.findOne({ _id: id });
+    if (!role) return false;
+    return role;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
