@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
-import { CreateUserInput } from "../schema/user.schema";
+import { CreateUserInput, LoginUserInput } from "../schema/user.schema";
 import {
   AssignRoleToUserfn,
   createUser,
   getAllUsers,
+  getUserByEmailAndApplicationId,
 } from "../services/user.service";
+import { UsersModel } from "../models/user.model";
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput>,
@@ -21,6 +23,40 @@ export async function createUserHandler(
       .status(201)
       .json({
         status: 201,
+        data: user,
+      })
+      .end();
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function loginHandler(
+  req: Request<{}, {}, LoginUserInput>,
+  res: Response
+) {
+  try {
+    const { email, applicationId, password } = req.body;
+    const user = await getUserByEmailAndApplicationId({ email, applicationId });
+
+    if (!user)
+      return res.status(401).json({
+        status: 401,
+        error: "cannot find user! please use correcct valid email",
+      });
+
+    const isAuth = await UsersModel.verifyPassword(password, user.password);
+
+    if (!isAuth)
+      return res.status(403).json({
+        status: 403,
+        error: "incorrect password! cannot login",
+      });
+
+    return res
+      .status(200)
+      .json({
+        status: 200,
         data: user,
       })
       .end();

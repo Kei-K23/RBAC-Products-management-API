@@ -26,6 +26,20 @@ export const createUserSchema = z.object({
     }),
 });
 
+export const loginUserSchema = z.object({
+  body: z.object({
+    email: z
+      .string({ required_error: "email is required" })
+      .email("invalid email format"),
+    applicationId: z.string({
+      required_error: "application id is requried",
+    }),
+    password: z
+      .string({ required_error: "password is required" })
+      .min(6, "password must be at least 6 character long"),
+  }),
+});
+
 export const assignRoleToUserSchema = z.object({
   body: z.object({
     applicationId: z.string({
@@ -47,3 +61,5 @@ export type CreateUserInput = Omit<
 export type AssignRoleToUserInput = TypeOf<
   typeof assignRoleToUserSchema
 >["body"];
+
+export type LoginUserInput = TypeOf<typeof loginUserSchema>["body"];

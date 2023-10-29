@@ -1,6 +1,6 @@
 import { SYSTEM_ROLE } from "../config/permissons";
 import { AssingRoleToUserModel, UsersModel } from "../models/user.model";
-import { AssignRoleToUserInput, CreateUserInput } from "../schema/user.schema";
+import { CreateUserInput } from "../schema/user.schema";
 import { getRoleByName } from "./role.service";
 
 export async function createUser(payload: CreateUserInput) {
@@ -17,6 +17,22 @@ export async function getAllUsers() {
     const users = await UsersModel.find();
     if (!users.length) return false;
     return users;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function getUserByEmailAndApplicationId({
+  email,
+  applicationId,
+}: {
+  email: string;
+  applicationId: string;
+}) {
+  try {
+    const user = await UsersModel.findOne({ email, applicationId });
+    if (!user) return false;
+    return user;
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
