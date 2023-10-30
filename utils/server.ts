@@ -16,7 +16,7 @@ export default function () {
   app.use(cookie);
   app.use(revalidateAccessToken);
   app.use(deserializedUser);
-  app.use(guard("SUPER_ADMIN"));
+  // app.use(guard("SUPER_ADMIN"));
   app.use(routes());
   return app;
 }
