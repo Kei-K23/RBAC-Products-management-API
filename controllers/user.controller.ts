@@ -46,3 +46,16 @@ export async function getAllUsersHandler(req: Request, res: Response) {
     return res.status(500).json({ status: 500, error: e.message }).end();
   }
 }
+
+export async function getAuthUserHandler(req: Request, res: Response) {
+  try {
+    const user = res.locals.user;
+    if (!user)
+      return res
+        .status(404)
+        .json({ status: 404, error: "could not find authorized user" });
+    return res.status(200).json({ status: 200, data: user });
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
