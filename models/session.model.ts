@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
 
 export interface SessionInput {
   userId: string;
@@ -8,12 +8,13 @@ export interface SessionInput {
   permissions: Array<string>;
 }
 
-interface SessionDocument extends mongoose.Document {
+export interface SessionDocument extends mongoose.Document {
   userId: mongoose.ObjectId;
   email: string;
   applicationId: mongoose.ObjectId;
   roleId: mongoose.ObjectId;
   permissions: Array<string>;
+  valid: boolean;
 }
 
 interface SessionModel extends mongoose.Model<SessionDocument> {}
@@ -37,11 +38,14 @@ const sessionSchema = new mongoose.Schema<SessionDocument, SessionModel>({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   permissions: {
     type: [],
     required: true,
+  },
+  valid: {
+    type: Boolean,
+    default: true,
   },
 });
 export const SessionModel = mongoose.model("Sessions", sessionSchema);

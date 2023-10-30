@@ -45,13 +45,15 @@ export async function loginHandler(
     });
 
     res.cookie("pos_access_token", accessToken, {
+      domain: "localhost",
+      path: "/",
       maxAge: 60000,
     });
     res.cookie("pos_refresh_token", refreshToken, {
+      domain: "localhost",
+      path: "/",
       maxAge: 2.592e8,
     });
-
-    res.locals.user = user;
 
     return res
       .status(200)

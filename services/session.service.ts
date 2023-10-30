@@ -1,4 +1,9 @@
-import { SessionInput, SessionModel } from "../models/session.model";
+import { FilterQuery } from "mongoose";
+import {
+  SessionDocument,
+  SessionInput,
+  SessionModel,
+} from "../models/session.model";
 import { signJWT } from "../utils/jwt.utils";
 
 export async function createSession(palyload: SessionInput) {
@@ -29,15 +34,25 @@ export async function createRefreshToken(payload: SessionInput) {
   try {
     const session = (await createSession(payload)).toJSON();
 
-    const accessToken = signJWT({
+    const refreshToken = signJWT({
       payload: session,
-      secret: "ACCESS_TOKEN_PRIVATE_KEY",
+      secret: "REFRESH_TOKEN_PRIVATE_KEY",
       options: {
         expiresIn: "3d",
       },
     });
 
-    return accessToken;
+    return refreshToken;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function findSession(filter: FilterQuery<SessionDocument>) {
+  try {
+    const session = await SessionModel.findOne(filter);
+    if (!session) return false;
+    return session;
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
