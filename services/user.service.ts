@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { SYSTEM_ROLE } from "../config/permissons";
+import { SYSTEM_ROLE } from "../config/permissions";
 import {
   AssignRoleToUserDocument,
   AssingRoleToUserModel,
@@ -56,7 +56,7 @@ export async function getUserByEmailAndApplicationId({
   }
 }
 
-export async function AssignRoleToUserfn({
+export async function assignRoleToUserfn({
   applicationId,
   userId,
   roleId,

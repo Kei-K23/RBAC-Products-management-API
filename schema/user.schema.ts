@@ -17,7 +17,7 @@ export const createUserSchema = z.object({
         .string({ required_error: "confirm password is required" })
         .min(6, "confirm password must be at least 6 character long"),
       applicationId: z.string({
-        required_error: "application id is requried",
+        required_error: "application id is required",
       }),
     })
     .refine((data) => data.password === data.confirm_password, {
@@ -32,7 +32,7 @@ export const loginUserSchema = z.object({
       .string({ required_error: "email is required" })
       .email("invalid email format"),
     applicationId: z.string({
-      required_error: "application id is requried",
+      required_error: "application id is required",
     }),
     password: z
       .string({ required_error: "password is required" })
@@ -43,13 +43,13 @@ export const loginUserSchema = z.object({
 export const assignRoleToUserSchema = z.object({
   body: z.object({
     applicationId: z.string({
-      required_error: "application id is requried",
+      required_error: "application id is required",
     }),
     userId: z.string({
-      required_error: "user id is requried",
+      required_error: "user id is required",
     }),
     roleId: z.string({
-      required_error: "role id is requried",
+      required_error: "role id is required",
     }),
   }),
 });

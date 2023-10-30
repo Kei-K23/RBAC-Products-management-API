@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { CreateUserInput } from "../schema/user.schema";
+import { AssignRoleToUserInput, CreateUserInput } from "../schema/user.schema";
 import {
-  AssignRoleToUserfn,
+  assignRoleToUserfn,
   createUser,
   getAllUsers,
 } from "../services/user.service";
@@ -12,7 +12,7 @@ export async function createUserHandler(
 ) {
   try {
     const user = await createUser(req.body);
-    AssignRoleToUserfn({
+    assignRoleToUserfn({
       applicationId: user.applicationId.toString(),
       userId: user._id,
     });
@@ -55,6 +55,23 @@ export async function getAuthUserHandler(req: Request, res: Response) {
         .status(404)
         .json({ status: 404, error: "could not find authorized user" });
     return res.status(200).json({ status: 200, data: user });
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function assignRoleToUserHandler(
+  req: Request<{}, {}, AssignRoleToUserInput>,
+  res: Response
+) {
+  try {
+    const assignRoleToUser = await assignRoleToUserfn(req.body);
+    if (!assignRoleToUser)
+      return res
+        .status(500)
+        .json({ status: 500, error: "could not assign role to user" });
+
+    return res.status(201).json({ status: 201, data: assignRoleToUser });
   } catch (e: any) {
     return res.status(500).json({ status: 500, error: e.message }).end();
   }

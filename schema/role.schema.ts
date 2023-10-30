@@ -1,5 +1,5 @@
 import { TypeOf, z } from "zod";
-import { ALL_PERMISSIONS } from "../config/permissons";
+import { ALL_PERMISSIONS } from "../config/permissions";
 
 export const createRoleSchema = z.object({
   body: z.object({
@@ -8,7 +8,7 @@ export const createRoleSchema = z.object({
       invalid_type_error: "role name should be string",
     }),
     applicationId: z.string({
-      required_error: "application id is requried",
+      required_error: "application id is required",
     }),
     permissions: z.array(z.enum([...ALL_PERMISSIONS])),
   }),

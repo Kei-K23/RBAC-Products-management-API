@@ -9,7 +9,7 @@ import {
   APPLICATION_USER_PERMISSION,
   MUTABLE_ALL_PERMISSIONS,
   SYSTEM_ROLE,
-} from "../config/permissons";
+} from "../config/permissions";
 
 export async function createApplicationHandler(
   req: Request<{}, {}, CreateApplicationInput>,
