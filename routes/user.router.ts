@@ -11,7 +11,7 @@ import requiredUser from "../middlewares/requiredUser";
 
 export default function (router: Router) {
   router.get("/api/v1/users", revalidateAccessToken, getAllUsersHandler);
-  router.get("/api/v1/users/me", getAuthUserHandler);
+  router.get("/api/v1/users/me", requiredUser, getAuthUserHandler);
   router.post(
     "/api/v1/users",
     validateResource(createUserSchema),

@@ -5,6 +5,7 @@ import routes from "../routes";
 import cookie from "../middlewares/cookie";
 import deserializedUser from "../middlewares/deserializedUser";
 import revalidateAccessToken from "../middlewares/revalidateAccessToken";
+import guard from "../middlewares/guard";
 dotenv.config();
 
 export default function () {
@@ -15,6 +16,7 @@ export default function () {
   app.use(cookie);
   app.use(revalidateAccessToken);
   app.use(deserializedUser);
+  app.use(guard("SUPER_ADMIN"));
   app.use(routes());
   return app;
 }

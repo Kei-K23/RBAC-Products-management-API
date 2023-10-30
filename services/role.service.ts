@@ -1,4 +1,5 @@
-import { RolesModel } from "../models/role.model";
+import { FilterQuery } from "mongoose";
+import { RolesDocument, RolesModel } from "../models/role.model";
 import { CreateRoleInput } from "../schema/role.schema";
 
 export async function createRole(payload: CreateRoleInput) {
@@ -29,9 +30,9 @@ export async function getRoleByName({
   }
 }
 
-export async function getRoleById({ id }: { id: string }) {
+export async function getRole(filter: FilterQuery<RolesDocument>) {
   try {
-    const role = await RolesModel.findOne({ _id: id });
+    const role = await RolesModel.findOne(filter);
     if (!role) return false;
     return role;
   } catch (e: any) {

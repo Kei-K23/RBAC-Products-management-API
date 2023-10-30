@@ -52,7 +52,7 @@ export default async function (
       error: "could not refresh access token! invalid refresh token",
     });
 
-  const newAccessToken = createAccessToken({
+  const newAccessToken = await createAccessToken({
     userId: refreshTokenDecoded.userId,
     applicationId: refreshTokenDecoded.applicationId,
     email: refreshTokenDecoded.email,

@@ -6,7 +6,7 @@ import {
   UsersModel,
 } from "../models/user.model";
 import { CreateUserInput } from "../schema/user.schema";
-import { getRoleById, getRoleByName } from "./role.service";
+import { getRole, getRoleByName } from "./role.service";
 
 export async function createUser(payload: CreateUserInput) {
   try {
@@ -46,7 +46,7 @@ export async function getUserByEmailAndApplicationId({
 
     if (!assignRoleToUser) return false;
 
-    const role = await getRoleById({ id: assignRoleToUser.roleId });
+    const role = await getRole({ id: assignRoleToUser.roleId });
 
     if (!role) return false;
 
