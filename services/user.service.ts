@@ -20,7 +20,7 @@ export async function createUser(payload: CreateUserInput) {
 
 export async function getUser(filter: FilterQuery<UsersDocument>) {
   try {
-    const user = await UsersModel.findOne(filter, { password: 0 });
+    const user = await UsersModel.findOne(filter, { password: 0, __v: 0 });
     if (!user) return false;
     return user;
   } catch (e: any) {

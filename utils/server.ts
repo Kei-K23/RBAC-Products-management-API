@@ -14,9 +14,7 @@ export default function () {
   app.use(cors());
   app.use(express.json());
   app.use(cookie);
-  // app.use(revalidateAccessToken);
   app.use(deserializedUser);
-  // app.use();
   app.use(routes());
   return app;
 }

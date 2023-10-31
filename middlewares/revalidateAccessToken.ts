@@ -72,5 +72,13 @@ export default async function (
   });
 
   res.locals.cookie.pos_access_token = newAccessToken;
+  res.locals.user = {
+    userId: refreshTokenDecoded.userId,
+    applicationId: refreshTokenDecoded.applicationId,
+    email: refreshTokenDecoded.email,
+    permissions: refreshTokenDecoded.permissions,
+    roleId: refreshTokenDecoded.roleId,
+  };
+
   return next();
 }

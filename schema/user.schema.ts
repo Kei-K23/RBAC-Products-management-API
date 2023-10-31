@@ -63,6 +63,27 @@ export const actionUserSchema = z.object({
   }),
 });
 
+export const editUserSchema = z.object({
+  body: z.object({
+    name: z
+      .string({
+        required_error: "user name is required!",
+        invalid_type_error: "user name should be string",
+      })
+      .optional(),
+    email: z
+      .string({ required_error: "email is required" })
+      .email("invalid email format")
+      .optional(),
+  }),
+  params: z.object({
+    userId: z.string({ required_error: "user id is required" }),
+    applicationId: z.string({
+      required_error: "application id is required",
+    }),
+  }),
+});
+
 export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>["body"],
   "confirm_password"
@@ -73,3 +94,4 @@ export type AssignRoleToUserInput = TypeOf<
 
 export type LoginUserInput = TypeOf<typeof loginUserSchema>["body"];
 export type ActionUserInput = TypeOf<typeof actionUserSchema>["params"];
+export type EditUserInput = TypeOf<typeof editUserSchema>;

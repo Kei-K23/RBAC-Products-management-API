@@ -3,12 +3,14 @@ import {
   ActionUserInput,
   AssignRoleToUserInput,
   CreateUserInput,
+  EditUserInput,
 } from "../schema/user.schema";
 import {
   assignRoleToUserfn,
   createUser,
   deleteUser,
   editAssignRoleToUser,
+  editUser,
   getAllUsers,
   getUser,
 } from "../services/user.service";
@@ -58,7 +60,13 @@ export async function getAllUsersHandler(req: Request, res: Response) {
 
 export async function getAuthUserHandler(req: Request, res: Response) {
   try {
-    const user = res.locals.user;
+    const localUser = res.locals.user;
+
+    const user = await getUser({
+      _id: localUser.userId,
+      applicationId: localUser.applicationId,
+    });
+
     if (!user)
       return res
         .status(404)
@@ -103,49 +111,61 @@ export async function deleteUserHandler(
   res: Response
 ) {
   const { applicationId, userId } = req.params;
-  const existingUser = res.locals.user;
-
-  const isSuperAdminPermissions =
-    JSON.stringify(existingUser.permissions) ===
-      JSON.stringify(ALL_PERMISSIONS) &&
-    existingUser.applicationId === applicationId;
 
   try {
-    const user = await getUser({ _id: userId, applicationId });
+    await deleteUser({ _id: userId, applicationId });
 
-    if (!user)
-      return res
-        .status(404)
-        .json({ status: 404, error: "user cannot find" })
-        .end();
+    res.clearCookie("pos_access_token", {
+      domain: "localhost",
+      path: "/",
+    });
+    res.clearCookie("pos_refresh_token", {
+      domain: "localhost",
+      path: "/",
+    });
 
-    if (
-      user._id !== existingUser.userId &&
-      user.applicationId !== existingUser.applicationId
-    ) {
-      if (isSuperAdminPermissions) {
-        await deleteUser({ _id: userId, applicationId });
-      } else {
-        return res
-          .status(403)
-          .json({
-            status: 403,
-            error:
-              "forbidden! you are not authorized user to delete this account",
-          })
-          .end();
-      }
-    }
-
-    if (
-      user._id === existingUser.userId &&
-      user.applicationId === existingUser.applicationId
-    )
-      await deleteUser({ _id: userId, applicationId });
+    res.locals.user = {};
+    res.locals.cookie = {};
 
     return res
       .status(200)
       .json({ status: 200, message: "user account is deleted!" })
+      .end();
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function editUserHandler(
+  req: Request<EditUserInput["params"], {}, EditUserInput["body"]>,
+  res: Response
+) {
+  try {
+    const { applicationId, userId } = req.params;
+
+    const editedUser = await editUser(
+      { _id: userId, applicationId },
+      { ...req.body }
+    );
+
+    res.clearCookie("pos_access_token", {
+      domain: "localhost",
+      path: "/",
+    });
+    res.clearCookie("pos_refresh_token", {
+      domain: "localhost",
+      path: "/",
+    });
+
+    res.locals.user = {};
+    res.locals.cookie = {};
+
+    return res
+      .status(200)
+      .json({
+        status: 200,
+        message: "user information is updated! please login again",
+      })
       .end();
   } catch (e: any) {
     return res.status(500).json({ status: 500, error: e.message }).end();
