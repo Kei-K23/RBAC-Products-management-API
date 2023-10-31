@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import {
   createProduct,
+  deleteProduct,
+  editProduct,
   getProducts,
   getRandomProduct,
 } from "../services/product.service";
 import {
+  ActionProductInput,
   CreateProductsInput,
+  EditProductInput,
   GetProductsInput,
 } from "../schema/product.schema";
 
@@ -59,6 +63,39 @@ export async function getRandomProductHandler(req: Request, res: Response) {
         .end();
 
     return res.status(200).json({ status: 200, data: product }).end();
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function editProductHandler(
+  req: Request<EditProductInput["params"], {}, EditProductInput["body"]>,
+  res: Response
+) {
+  try {
+    await editProduct({ _id: req.params.productId }, req.body);
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "successfully edited the products" })
+      .end();
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function deleteProductHandler(
+  req: Request<ActionProductInput>,
+  res: Response
+) {
+  try {
+    const id = req.params.productId;
+    await deleteProduct(id);
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "successfully deleted the product" })
+      .end();
   } catch (e: any) {
     return res.status(500).json({ status: 500, error: e.message }).end();
   }

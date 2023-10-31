@@ -62,6 +62,47 @@ export const getProductsSchema = z.object({
       .optional(),
   }),
 });
+export const editProductsSchema = z.object({
+  body: z.object({
+    name: z.string().min(1, "name must be at least one character").optional(),
+    description: z
+      .string()
+      .min(1, "description must be at least one character")
+      .optional(),
+    averageQuantity: z
+      .string()
+      .min(1, "average quantity must be at least one character")
+      .optional(),
+    quantity: z.number().optional(),
+    price: z.number().optional(),
+    distribution: z
+      .string()
+      .min(1, "distribution must be at least one character")
+      .optional(),
+    made: z.string({}).min(1, "made must be at least one character").optional(),
+    category: z
+      .string({})
+      .min(1, "category must be at least one character")
+      .optional(),
+  }),
+  params: z.object({
+    productId: z.string({
+      required_error: "product id is required!",
+      invalid_type_error: "product id must be string",
+    }),
+  }),
+});
+
+export const actionProductSchema = z.object({
+  params: z.object({
+    productId: z.string({
+      required_error: "product id is required!",
+      invalid_type_error: "product id must be string",
+    }),
+  }),
+});
 
 export type CreateProductsInput = z.infer<typeof createProductsSchema>["body"];
 export type GetProductsInput = z.infer<typeof getProductsSchema>["query"];
+export type EditProductInput = z.infer<typeof editProductsSchema>;
+export type ActionProductInput = z.infer<typeof actionProductSchema>["params"];

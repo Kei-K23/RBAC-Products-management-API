@@ -1,4 +1,5 @@
-import { ProductModel } from "../models/products.model";
+import { FilterQuery, UpdateQuery } from "mongoose";
+import { ProductDocument, ProductModel } from "../models/products.model";
 import { CreateProductsInput } from "../schema/product.schema";
 import { randomNumber } from "../utils/utils";
 
@@ -20,6 +21,28 @@ export async function getProducts(limit = 1) {
     throw new Error(e.message.toString());
   }
 }
+
+export async function editProduct(
+  filter: FilterQuery<ProductDocument>,
+  update: UpdateQuery<ProductDocument>
+) {
+  try {
+    const editedProduct = await ProductModel.findOneAndUpdate(filter, update);
+
+    return editedProduct;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function deleteProduct(id: string) {
+  try {
+    await ProductModel.findOneAndDelete({ _id: id });
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
 export async function getRandomProduct() {
   try {
     const products = await ProductModel.find();
