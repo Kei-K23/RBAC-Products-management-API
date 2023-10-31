@@ -31,13 +31,13 @@ export default function (router: Router) {
     validateResource(editProductsSchema),
     editProductHandler
   );
-  router.delete(
-    "/api/v1/products/:productId",
-    revalidateAccessToken,
-    requiredUser,
-    validateResource(actionProductSchema),
-    deleteProductHandler
-  );
+  // router.delete(
+  //   "/api/v1/products/:productId",
+  //   revalidateAccessToken,
+  //   requiredUser,
+  //   validateResource(actionProductSchema),
+  //   deleteProductHandler
+  // );
   router.get(
     "/api/v1/products",
     revalidateAccessToken,
