@@ -1,4 +1,4 @@
-import { FilterQuery } from "mongoose";
+import { FilterQuery, UpdateQuery } from "mongoose";
 import {
   SessionDocument,
   SessionInput,
@@ -6,9 +6,21 @@ import {
 } from "../models/session.model";
 import { signJWT } from "../utils/jwt.utils";
 
-export async function createSession(palyload: SessionInput) {
+export async function createSession(payload: SessionInput) {
   try {
-    return await SessionModel.create(palyload);
+    return await SessionModel.create(payload);
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+export async function editSession(
+  filter: FilterQuery<SessionDocument>,
+  update: UpdateQuery<SessionDocument>
+) {
+  try {
+    const updateSession = await SessionModel.findOneAndUpdate(filter, update);
+
+    return updateSession;
   } catch (e: any) {
     throw new Error(e.message.toString());
   }

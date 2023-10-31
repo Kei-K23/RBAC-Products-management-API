@@ -1,8 +1,9 @@
-import { FilterQuery } from "mongoose";
+import { FilterQuery, UpdateQuery } from "mongoose";
 import { SYSTEM_ROLE } from "../config/permissions";
 import {
   AssignRoleToUserDocument,
-  AssingRoleToUserModel,
+  AssignRoleToUserModel,
+  UsersDocument,
   UsersModel,
 } from "../models/user.model";
 import { CreateUserInput } from "../schema/user.schema";
@@ -11,6 +12,28 @@ import { getRole, getRoleByName } from "./role.service";
 export async function createUser(payload: CreateUserInput) {
   try {
     const user = await UsersModel.create(payload);
+    return user;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function getUser(filter: FilterQuery<UsersDocument>) {
+  try {
+    const user = await UsersModel.findOne(filter);
+    if (!user) return false;
+    return user;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function editUser(
+  filter: FilterQuery<UsersDocument>,
+  update: UpdateQuery<UsersDocument>
+) {
+  try {
+    const user = await UsersModel.findOneAndUpdate(filter, update);
     return user;
   } catch (e: any) {
     throw new Error(e.message.toString());
@@ -35,7 +58,7 @@ export async function getUserByEmailAndApplicationId({
   applicationId: string;
 }) {
   try {
-    const user = await UsersModel.findOne({ email, applicationId }).lean();
+    const user = await UsersModel.findOne({ email, applicationId });
 
     if (!user) return false;
 
@@ -46,11 +69,15 @@ export async function getUserByEmailAndApplicationId({
 
     if (!assignRoleToUser) return false;
 
-    const role = await getRole({ id: assignRoleToUser.roleId });
+    const role = await getRole({ _id: assignRoleToUser.roleId });
 
     if (!role) return false;
 
-    return { ...user, permissions: role.permissions, roleId: role._id };
+    return {
+      ...user.toJSON(),
+      permissions: role.permissions,
+      roleId: role._id,
+    };
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
@@ -78,7 +105,7 @@ export async function assignRoleToUserfn({
     });
 
     const role_id = roleId ? roleId : role && role._id;
-    const assignRoleToUser = await AssingRoleToUserModel.create({
+    const assignRoleToUser = await AssignRoleToUserModel.create({
       applicationId,
       userId,
       roleId: role_id,
@@ -103,7 +130,7 @@ export async function getUserFromAssignRoleToUser(
   filter: FilterQuery<AssignRoleToUserDocument>
 ) {
   try {
-    const user = await AssingRoleToUserModel.findOne(filter);
+    const user = await AssignRoleToUserModel.findOne(filter);
     if (!user) return false;
     return user;
   } catch (e: any) {

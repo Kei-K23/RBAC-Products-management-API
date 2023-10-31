@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { verifyJWT } from "../utils/jwt.utils";
 import { SessionInput } from "../models/session.model";
 import { getRole } from "../services/role.service";
+import { SYSTEM_ROLE_TYPE } from "../config/permissions";
 
-export default (roleName: string) =>
+export default ({ roleName }: { roleName: string | SYSTEM_ROLE_TYPE }) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const accessToken = res.locals.cookie.pos_access_token;
 
@@ -28,12 +29,10 @@ export default (roleName: string) =>
     });
 
     if (!requiredRole || !roleFormAccessToken)
-      return res
-        .status(400)
-        .json({
-          status: 400,
-          message: "could not find the role for the application",
-        });
+      return res.status(400).json({
+        status: 400,
+        message: "could not find the role for the application",
+      });
 
     if (requiredRole.name !== roleFormAccessToken.name)
       return res.status(403).json({

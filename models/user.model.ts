@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import argon2 from "argon2";
 
-interface UsersDocument extends mongoose.Document {
+export interface UsersDocument extends mongoose.Document {
   name: string;
   applicationId: mongoose.ObjectId;
   email: string;
@@ -100,7 +100,7 @@ export const UsersModel = mongoose.model<UsersDocument, UsersModel>(
   usersSchema
 );
 
-export const AssingRoleToUserModel = mongoose.model<
+export const AssignRoleToUserModel = mongoose.model<
   AssignRoleToUserDocument,
   AssignRoleToUserModel
 >("AssignRoleToUser", assignRoleToUserSchema);
