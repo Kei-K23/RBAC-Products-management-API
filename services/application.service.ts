@@ -3,8 +3,7 @@ import { CreateApplicationInput } from "../schema/application.schema";
 
 export async function createApplication(payload: CreateApplicationInput) {
   try {
-    const application = await ApplicationsModel.create(payload);
-    return application;
+    return await ApplicationsModel.create(payload);
   } catch (e: any) {
     throw new Error(e.message.toString());
   }

@@ -11,8 +11,7 @@ import { getRole, getRoleByName } from "./role.service";
 
 export async function createUser(payload: CreateUserInput) {
   try {
-    const user = await UsersModel.create(payload);
-    return user;
+    return await UsersModel.create(payload);
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
