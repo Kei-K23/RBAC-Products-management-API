@@ -40,15 +40,6 @@ export const loginUserSchema = z.object({
   }),
 });
 
-export const logoutSchema = z.object({
-  params: z.object({
-    userId: z.string({ required_error: "user id is required" }),
-    applicationId: z.string({
-      required_error: "application id is required",
-    }),
-  }),
-});
-
 export const assignRoleToUserSchema = z.object({
   body: z.object({
     applicationId: z.string({
@@ -63,6 +54,15 @@ export const assignRoleToUserSchema = z.object({
   }),
 });
 
+export const actionUserSchema = z.object({
+  params: z.object({
+    userId: z.string({ required_error: "user id is required" }),
+    applicationId: z.string({
+      required_error: "application id is required",
+    }),
+  }),
+});
+
 export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>["body"],
   "confirm_password"
@@ -72,4 +72,4 @@ export type AssignRoleToUserInput = TypeOf<
 >["body"];
 
 export type LoginUserInput = TypeOf<typeof loginUserSchema>["body"];
-export type LogoutUserInput = TypeOf<typeof logoutSchema>["params"];
+export type ActionUserInput = TypeOf<typeof actionUserSchema>["params"];

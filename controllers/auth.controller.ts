@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
-import { LoginUserInput, LogoutUserInput } from "../schema/user.schema";
-import {
-  editUser,
-  getUserByEmailAndApplicationId,
-} from "../services/user.service";
+import { LoginUserInput, ActionUserInput } from "../schema/user.schema";
+import { getUserByEmailAndApplicationId } from "../services/user.service";
 import { UsersModel } from "../models/user.model";
 import {
   createAccessToken,
@@ -77,6 +74,14 @@ export async function loginHandler(
       maxAge: 2.592e8,
     });
 
+    res.locals.user = {
+      userId: user._id,
+      applicationId: user.applicationId,
+      email: user.email,
+      permissions: user.permissions,
+      roleId: user.roleId,
+    };
+
     return res
       .status(200)
       .json({
@@ -90,11 +95,14 @@ export async function loginHandler(
 }
 
 export async function logoutHandler(
-  req: Request<LogoutUserInput>,
+  req: Request<ActionUserInput>,
   res: Response
 ) {
   const accessToken = res.locals.cookie.pos_access_token;
-  const accessTokenDecoded = verifyJWT({
+  const accessTokenDecoded = verifyJWT<{
+    userId: string;
+    applicationId: string;
+  }>({
     token: accessToken,
     secret: "ACCESS_TOKEN_PUBLIC_KEY",
   });
@@ -108,16 +116,7 @@ export async function logoutHandler(
     });
 
   try {
-    const accessToken = res.locals.cookie.pos_access_token;
     const { applicationId, userId } = req.params;
-
-    const accessTokenDecoded = verifyJWT<{
-      userId: string;
-      applicationId: string;
-    }>({
-      token: accessToken,
-      secret: "ACCESS_TOKEN_PUBLIC_KEY",
-    });
 
     if (!accessTokenDecoded)
       return res
@@ -125,13 +124,19 @@ export async function logoutHandler(
         .json({ status: 403, error: "missing access token!" })
         .end();
 
-    if (
-      accessTokenDecoded.userId !== userId &&
-      accessTokenDecoded.applicationId !== applicationId
-    )
+    if (accessTokenDecoded.userId !== userId)
       return res
         .status(403)
-        .json({ status: 403, error: "forbidden! could not logout!" })
+        .json({ status: 403, error: "forbidden! user id does not match!" })
+        .end();
+
+    if (accessTokenDecoded.applicationId !== applicationId)
+      return res
+        .status(403)
+        .json({
+          status: 403,
+          error: "forbidden! application id does not match!",
+        })
         .end();
 
     await editSession({ userId, applicationId }, { valid: false });

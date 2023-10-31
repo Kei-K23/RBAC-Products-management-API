@@ -34,15 +34,6 @@ const usersSchema = new mongoose.Schema<UsersDocument, UsersModel>(
     email: {
       type: String,
       required: true,
-      unique: true,
-      validate: {
-        validator: async function (email: string) {
-          const existingUser = await UsersModel.findOne({ email });
-          if (existingUser) return false;
-          return true;
-        },
-        message: (email) => `${email} is already exist`,
-      },
     },
     password: {
       type: String,

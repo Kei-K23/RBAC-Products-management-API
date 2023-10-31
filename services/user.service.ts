@@ -20,7 +20,7 @@ export async function createUser(payload: CreateUserInput) {
 
 export async function getUser(filter: FilterQuery<UsersDocument>) {
   try {
-    const user = await UsersModel.findOne(filter);
+    const user = await UsersModel.findOne(filter, { password: 0 });
     if (!user) return false;
     return user;
   } catch (e: any) {
@@ -40,9 +40,23 @@ export async function editUser(
   }
 }
 
+export async function deleteUser({
+  _id,
+  applicationId,
+}: {
+  _id: string;
+  applicationId: string;
+}) {
+  try {
+    await UsersModel.findOneAndDelete({ _id, applicationId });
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
 export async function getAllUsers() {
   try {
-    const users = await UsersModel.find();
+    const users = await UsersModel.find({}, { password: 0 });
     if (!users.length) return false;
     return users;
   } catch (e: any) {
@@ -72,7 +86,6 @@ export async function getUserByEmailAndApplicationId({
     const role = await getRole({ _id: assignRoleToUser.roleId });
 
     if (!role) return false;
-
     return {
       ...user.toJSON(),
       permissions: role.permissions,
@@ -118,7 +131,7 @@ export async function assignRoleToUserfn({
 
 export async function getUserByApplicationId(applicationId: string) {
   try {
-    const user = await UsersModel.find({ applicationId });
+    const user = await UsersModel.find({ applicationId }, { password: 0 });
     if (!user) return false;
     return user;
   } catch (e: any) {
@@ -133,6 +146,22 @@ export async function getUserFromAssignRoleToUser(
     const user = await AssignRoleToUserModel.findOne(filter);
     if (!user) return false;
     return user;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function editAssignRoleToUser(
+  filter: FilterQuery<AssignRoleToUserDocument>,
+  update: UpdateQuery<AssignRoleToUserDocument>
+) {
+  try {
+    const assignRoleToUser = await AssignRoleToUserModel.findOneAndUpdate(
+      filter,
+      update
+    );
+    if (!assignRoleToUser) return false;
+    return assignRoleToUser;
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
