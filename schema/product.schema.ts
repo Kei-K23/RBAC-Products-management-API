@@ -52,4 +52,16 @@ export const createProductsSchema = z.object({
   }),
 });
 
+export const getProductsSchema = z.object({
+  query: z.object({
+    limit: z
+      .string({
+        required_error: "limit is required!",
+        invalid_type_error: "limit number must be string",
+      })
+      .optional(),
+  }),
+});
+
 export type CreateProductsInput = z.infer<typeof createProductsSchema>["body"];
+export type GetProductsInput = z.infer<typeof getProductsSchema>["query"];
