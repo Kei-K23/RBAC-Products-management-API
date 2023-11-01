@@ -20,6 +20,29 @@ import guard from "../middlewares/guard";
 import permissionForAdminAndAuthUser from "../middlewares/permissionForAdminAndAuthUser";
 
 export default function (router: Router) {
+  /**
+   * @openapi
+   * /api/v1/users:
+   *   get:
+   *     tags:
+   *     - Users
+   *     summary: Response all user data for only super admin user
+   *     responses:
+   *       '200':
+   *          description: Success
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/components/schemas/UsersResponseData'
+   *       '400':
+   *          description: No users to provide
+   *          content:
+   *            application/json: {}
+   *       '500':
+   *          description: Internal server error
+   *          content:
+   *            application/json: {}
+   */
   router.get(
     "/api/v1/users",
     revalidateAccessToken,

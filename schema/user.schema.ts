@@ -1,5 +1,50 @@
 import { TypeOf, z } from "zod";
-
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    CreateUserInput:
+ *      type: object
+ *      required:
+ *        - name
+ *        - email
+ *        - password
+ *        - confirm_password
+ *        - applicationId
+ *      properties:
+ *        email:
+ *          type: string
+ *          default: foo@example.com
+ *        name:
+ *          type: string
+ *          default: foo
+ *        password:
+ *          type: string
+ *          default: strongPassword
+ *        confirm_password:
+ *          type: string
+ *          default: strongPassword
+ *        applicationId:
+ *          type: string
+ *          default: 653d4f44ebae3d0dc8c73add
+ *    UsersResponseData:
+ *      type: object
+ *      properties:
+ *        email:
+ *          type: string
+ *        name:
+ *          type: string
+ *        applicationId:
+ *          type: string
+ *        __id:
+ *          type: string
+ *        __v:
+ *          type: number
+ *        createdAt:
+ *          type: string
+ *        updatedAt:
+ *          type: string
+ */
 export const createUserSchema = z.object({
   body: z
     .object({
