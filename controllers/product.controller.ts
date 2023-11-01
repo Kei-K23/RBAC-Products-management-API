@@ -39,8 +39,9 @@ export async function getProductsHandler(
   res: Response
 ) {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 1;
-    const products = await getProducts(limit);
+    const { category, limit, name } = req.query;
+    const limitDoc = limit ? parseInt(limit, 10) : 1;
+    const products = await getProducts({ name, category }, limitDoc);
 
     if (!products)
       return res

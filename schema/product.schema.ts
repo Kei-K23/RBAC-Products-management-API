@@ -54,12 +54,9 @@ export const createProductsSchema = z.object({
 
 export const getProductsSchema = z.object({
   query: z.object({
-    limit: z
-      .string({
-        required_error: "limit is required!",
-        invalid_type_error: "limit number must be string",
-      })
-      .optional(),
+    limit: z.string().optional(),
+    name: z.string().optional(),
+    category: z.string().optional(),
   }),
 });
 export const editProductsSchema = z.object({

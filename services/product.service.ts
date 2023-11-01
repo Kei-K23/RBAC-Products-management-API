@@ -1,4 +1,4 @@
-import { FilterQuery, UpdateQuery } from "mongoose";
+import mongoose, { FilterQuery, UpdateQuery } from "mongoose";
 import { ProductDocument, ProductModel } from "../models/products.model";
 import { CreateProductsInput } from "../schema/product.schema";
 import { randomNumber } from "../utils/utils";
@@ -11,14 +11,42 @@ export async function createProduct(payload: CreateProductsInput) {
   }
 }
 
-export async function getProducts(limit = 1) {
+export async function getProducts(
+  filter?: FilterQuery<ProductDocument>,
+  limit = 1
+) {
   try {
-    const limitDoc = limit * 10;
-    const products = await ProductModel.find({ quantity: { $gt: 0 } }).limit(
-      limitDoc
-    );
-    if (!products.length) return false;
-    return products;
+    if (filter?.name && filter?.category) {
+      return (
+        (await ProductModel.find({
+          name: { $regex: `${filter.name}`, $options: "i" },
+          category: { $regex: `${filter.category}`, $options: "i" },
+
+          quantity: { $gt: 0 },
+        })) ?? false
+      );
+    } else if (filter?.name) {
+      return (
+        (await ProductModel.find({
+          name: { $regex: `${filter.name}`, $options: "i" },
+          quantity: { $gt: 0 },
+        })) ?? false
+      );
+    } else if (filter?.category) {
+      return (
+        (await ProductModel.find({
+          category: { $regex: `${filter.category}`, $options: "i" },
+          quantity: { $gt: 0 },
+        })) ?? false
+      );
+    } else {
+      const limitDoc = limit * 10;
+      const products = await ProductModel.find({ quantity: { $gt: 0 } }).limit(
+        limitDoc
+      );
+      if (!products.length) return false;
+      return products;
+    }
   } catch (e: any) {
     throw new Error(e.message.toString());
   }
@@ -39,10 +67,10 @@ export async function editProduct(
 
 export async function saleProduct(productId: string, quantity = 1) {
   try {
-    const product = await getProductBy({ _id: productId });
+    const product = await getProductById({ _id: productId });
     if (!product) throw new Error("could not update products!");
 
-    const newQuantity = product[0].quantity - quantity;
+    const newQuantity = product.quantity - quantity;
 
     if (newQuantity < 0)
       throw new Error("no enough quantity for this product to sale");
@@ -80,13 +108,10 @@ export async function getRandomProduct() {
   }
 }
 
-export async function getProductBy(filter: FilterQuery<ProductDocument>) {
+export async function getProductById(filter: FilterQuery<ProductDocument>) {
   try {
-    const product = await ProductModel.find({
-      ...filter,
-      quantity: { $gt: 0 },
-    });
-    if (!product.length) return false;
+    const product = await ProductModel.findOne(filter);
+    if (!product) return false;
     return product;
   } catch (e: any) {
     throw new Error(e.message.toString());
