@@ -1,0 +1,665 @@
+{
+	"info": {
+		"_postman_id": "88af5bf2-a467-4abe-a51d-1b5b9879d31c",
+		"name": "POS-API",
+		"description": "POS (point of sale) system with RBAC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30708326"
+	},
+	"item": [
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "Get All Applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/applications",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": "Get all applicactions but this route is only for super admin user permissions"
+					},
+					"response": [
+						{
+							"name": "Get All Applications",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8008/api/v1/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8008",
+									"path": [
+										"api",
+										"v1",
+										"applications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "pos_access_token=; Domain=localhost; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "pos_access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQwOWYyYjhmM2FiMDY4NjcxM2Y0NDMiLCJhcHBsaWNhdGlvbklkIjoiNjUzZDRmNDRlYmFlM2QwZGM4YzczYWRkIiwiZW1haWwiOiJhZG1pbjFAZXhhbXBsZS5jb20iLCJwZXJtaXNzaW9ucyI6WyJzeXN0ZW06d3JpdGUiLCJzeXN0ZW06cmVhZCIsInN5c3RlbTplZGl0Iiwic3lzdGVtOmRlbGV0ZSIsInVzZXJzOnJvbGVzOndyaXRlIiwidXNlcnM6cm9sZXM6ZGVsZXRlIiwiYXBwOndyaXRlIiwiYXBwOnJlYWQiLCJhcHA6ZWRpdCIsImFwcDpkZWxldGUiXSwicm9sZUlkIjoiNjUzZDRmNDRlYmFlM2QwZGM4YzczYWUwIiwiaWF0IjoxNjk4ODI2Nzc5LCJleHAiOjE2OTg4MjY4Mzl9.mx1VvntenMv3CaiuyWGKzAUFE7P8L-87OdhZaMl8q9IAZl7DVj6NOzfdqbMzP4Vw6M1LgZPpRY3EkIO6JybCQ9ao6gAKUefcYpjti5eqV3ILpZAGTHfqCW1Oc2IW_v8utNnCRhmEzjPkNEq_oyI4Y2Gr8X3DGX5GVNOwqfZ0FImVz9qPhS_jMOtldG6KKVMHD8H30biiMj3qr56OwSAHng2mUutztVli1Z6vVTc-vd6oLuurV_b42v_tQh-ZzXjZX8G03kxikVAVyOooaBP0GU3PpmUGo6R2fI8jytcTF3-MmcTmvVsz0bJDnJePsrD7BmNbEY0Avh4dGoFUM_Frza_SZA8oT6SS7Yy9cRUpwl6D6p9q5-em6dLvfrv1TE3cMNuFgF4N2T9ZROXAeqrCurKYzGPTZzgLOf5BDg8a_4DteeKej_q4Kq4P3uZWQH6pOlhkd90houa_xqpqx3_-d7l8_Nr8VeAdE8hpu7J-oclE6KVGmhePcijtiZnfu07gY74FTUjIN4-DCIU0PS8WxJ0NclMTuWnK7XsR-0Yx3JEy54SykkUKvlxeqxTnokBhoYuRk-0ssW_uivTv6UUM3DZSbgTAleab9aJVpJRQq9YoviWhK6PpJKfvS27HXXR3e0z8_Sn22yu7QA1EKmtkb5o2Ce0mVXUkkIPDKTIY4l4; Max-Age=60; Domain=localhost; Path=/; Expires=Wed, 01 Nov 2023 08:20:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1051"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41b-SRMI1BMfpOCzKX99r07B2GZWzi0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Nov 2023 08:19:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": [\n        {\n            \"_id\": \"653d4f44ebae3d0dc8c73add\",\n            \"name\": \"application one\",\n            \"createdAt\": \"2023-10-28T18:13:24.522Z\",\n            \"updatedAt\": \"2023-10-28T18:13:24.522Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653ddbf4c39b55ecbf0e11fd\",\n            \"name\": \"application two\",\n            \"createdAt\": \"2023-10-29T04:13:40.544Z\",\n            \"updatedAt\": \"2023-10-29T04:13:40.544Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653de243bdec7a443da3e5d1\",\n            \"name\": \"application three\",\n            \"createdAt\": \"2023-10-29T04:40:35.393Z\",\n            \"updatedAt\": \"2023-10-29T04:40:35.393Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653de2866775cbe2159237e3\",\n            \"name\": \"application four\",\n            \"createdAt\": \"2023-10-29T04:41:42.758Z\",\n            \"updatedAt\": \"2023-10-29T04:41:42.758Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653de2f2f3023042f60ceff7\",\n            \"name\": \"application five\",\n            \"createdAt\": \"2023-10-29T04:43:30.200Z\",\n            \"updatedAt\": \"2023-10-29T04:43:30.200Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653f75777b1f5c577330aaf5\",\n            \"name\": \"application six\",\n            \"createdAt\": \"2023-10-30T09:20:55.868Z\",\n            \"updatedAt\": \"2023-10-30T09:20:55.868Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"653f7a2d23ddb8d361fc825d\",\n            \"name\": \"application seven\",\n            \"createdAt\": \"2023-10-30T09:41:01.458Z\",\n            \"updatedAt\": \"2023-10-30T09:41:01.458Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Application",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"application eight\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/applications",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": "Create new application but this route is only for super admin user permissions"
+					},
+					"response": [
+						{
+							"name": "Create Application",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"application eight\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8008/api/v1/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8008",
+									"path": [
+										"api",
+										"v1",
+										"applications"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "pos_access_token=; Domain=localhost; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "pos_access_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQwOWYyYjhmM2FiMDY4NjcxM2Y0NDMiLCJhcHBsaWNhdGlvbklkIjoiNjUzZDRmNDRlYmFlM2QwZGM4YzczYWRkIiwiZW1haWwiOiJhZG1pbjFAZXhhbXBsZS5jb20iLCJwZXJtaXNzaW9ucyI6WyJzeXN0ZW06d3JpdGUiLCJzeXN0ZW06cmVhZCIsInN5c3RlbTplZGl0Iiwic3lzdGVtOmRlbGV0ZSIsInVzZXJzOnJvbGVzOndyaXRlIiwidXNlcnM6cm9sZXM6ZGVsZXRlIiwiYXBwOndyaXRlIiwiYXBwOnJlYWQiLCJhcHA6ZWRpdCIsImFwcDpkZWxldGUiXSwicm9sZUlkIjoiNjUzZDRmNDRlYmFlM2QwZGM4YzczYWUwIiwiaWF0IjoxNjk4ODI3MDkxLCJleHAiOjE2OTg4MjcxNTF9.mFdIiCQNram3K8R-dnys6i_NodG0fASR0OzvX6BKxAyDtwW6yHoh00IhW_u2gV6oRs9lloo5_96xrlRbOp7GaJv2OC_iioEt90AkW9RWRAMNv42fdJUo7TpTv3TD_LavcDW4VurDFXUZSBrjz1Q9QPb1U44Qa4oFfILUXqxQhcmQLAKlKxrT3V2d-s2J6WL0e_EdgYVPW1t4XaQ75iD_NIj4Zpm5p4WBwf4kSn1rJFFr87xXgWK1XNwYi8cqnfaOgFAWPFHY5lMwiuHf_SKtA6n1wCATASoWEVfp4EfGJVGITaQpsGCUbCHFTqxCFaGOBzr34XnqSL73CoYjEvPGA0Osr3E50udYwRzifUwL1Z8qpKjXiHK0L04akqBLaRB8Juq5qOZWudKwcZurCTUppdOlcHMlHJ4szKWgIVryW8CZRvq-0q_Z1FiQ8PMtk-w86061oLqKUyfthEJr7i-Y5r_PSpQdeE1Egvs_5okdBWMPWVe4fS0gDcqV2Goz-nZ2OvhlZ-5Wvl_GrW9AqzXmnDkakEZZA-h-dZ2m6mq-DeLb7s3I-fJgG91Cfefcr7L1plrJzoyO-Dgiul43HgdiYtL5L8YJwnbN7V9WzDafzJh2G6Y93OZiZE8ihbYD-5I4H349yjWenmBz8YacRnztpZ7Z_Ju3dDsnbADFFPptLPU; Max-Age=60; Domain=localhost; Path=/; Expires=Wed, 01 Nov 2023 08:25:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "748"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ec-8cWlJ9cZLh4UZbto3whKkNMrgKI\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Nov 2023 08:24:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 201,\n    \"data\": [\n        {\n            \"name\": \"application eight\",\n            \"_id\": \"65420b537fcdcfbf8cddb3b9\",\n            \"createdAt\": \"2023-11-01T08:24:51.380Z\",\n            \"updatedAt\": \"2023-11-01T08:24:51.380Z\",\n            \"__v\": 0\n        },\n        {\n            \"name\": \"SUPER_ADMIN\",\n            \"applicationId\": \"65420b537fcdcfbf8cddb3b9\",\n            \"permissions\": [\n                \"system:write\",\n                \"system:read\",\n                \"system:edit\",\n                \"system:delete\",\n                \"users:roles:write\",\n                \"users:roles:delete\",\n                \"app:write\",\n                \"app:read\",\n                \"app:edit\",\n                \"app:delete\"\n            ],\n            \"_id\": \"65420b537fcdcfbf8cddb3bc\",\n            \"createdAt\": \"2023-11-01T08:24:51.427Z\",\n            \"updatedAt\": \"2023-11-01T08:24:51.427Z\",\n            \"__v\": 0\n        },\n        {\n            \"name\": \"APPLICATION_USER\",\n            \"applicationId\": \"65420b537fcdcfbf8cddb3b9\",\n            \"permissions\": [\n                \"app:write\",\n                \"app:read\"\n            ],\n            \"_id\": \"65420b537fcdcfbf8cddb3be\",\n            \"createdAt\": \"2023-11-01T08:24:51.431Z\",\n            \"updatedAt\": \"2023-11-01T08:24:51.431Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "This is applications route for pos api"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"user3-ap2\",\n    \"email\": \"user3@example.com\",\n    \"applicationId\" : \"653ddbf4c39b55ecbf0e11fd\",\n    \"password\" : \"mypassword\",\n    \"confirm_password\" : \"mypassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Create/register new user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Auth User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/:userId/:applicationId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								":applicationId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "65409f3e8f3ab0686713f449"
+								},
+								{
+									"key": "applicationId",
+									"value": "653d4f44ebae3d0dc8c73add"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"user2-ap1-updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/:userId/:applicationId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								":applicationId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "65409f458f3ab0686713f44f"
+								},
+								{
+									"key": "applicationId",
+									"value": "653d4f44ebae3d0dc8c73add"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Role To Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : \"654073bb81f457813327802d\",\n    \"roleId\" : \"653f7a6523ddb8d361fc8272\",\n    \"applicationId\" : \"653f7a2d23ddb8d361fc825d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/assign_role",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"assign_role"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is users route for pos api"
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Create New Roles",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"MODERATOR\",\n    \"permissions\" : [  \"app:write\",\n  \"app:read\",\n  \"app:edit\"],\n  \"applicationId\" : \"653f7a2d23ddb8d361fc825d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/role",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is roles routes for pos api"
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"admin1@example.com\",\n    \"password\" : \"mypassword\",\n    \"applicationId\" : \"653d4f44ebae3d0dc8c73add\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"admin8@example.com\",\n    \"password\" : \"mypassword\",\n    \"applicationId\" : \"653f7a2d23ddb8d361fc825d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/logout/:userId/:applicationId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"logout",
+								":userId",
+								":applicationId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "65409f458f3ab0686713f44f"
+								},
+								{
+									"key": "applicationId",
+									"value": "653d4f44ebae3d0dc8c73add"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is auth routes for pos api"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Canned Corn\",\n    \"description\": \"Sweet corn in a can\",\n    \"averageQuantity\": \"per can\",\n    \"quantity\": 15,\n    \"price\": 1.29,\n    \"distribution\": \"Canned Foods Inc.\",\n    \"made\": \"USA\",\n    \"category\": \"Canned Goods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sale Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products/sale/:productId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								"sale",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "65410fc548d1b591b5cdca81"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\" : 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products/:productId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "65410fc548d1b591b5cdca81"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Canned Corn updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products/:productId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "65410d31d5ee5ca0fda9c912"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Canned Corn\",\n    \"description\": \"Sweet corn in a can\",\n    \"averageQuantity\": \"per can\",\n    \"quantity\": 15,\n    \"price\": 1.29,\n    \"distribution\": \"Canned Foods Inc.\",\n    \"made\": \"USA\",\n    \"category\": \"Canned Goods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Random Product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Canned Corn\",\n    \"description\": \"Sweet corn in a can\",\n    \"averageQuantity\": \"per can\",\n    \"quantity\": 15,\n    \"price\": 1.29,\n    \"distribution\": \"Canned Foods Inc.\",\n    \"made\": \"USA\",\n    \"category\": \"Canned Goods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/products/random",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								"random"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is products routes for pos api"
+		}
+	]
+}
