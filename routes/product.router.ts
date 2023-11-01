@@ -5,6 +5,7 @@ import {
   editProductHandler,
   getProductsHandler,
   getRandomProductHandler,
+  saleProductHandler,
 } from "../controllers/product.controller";
 import validateResource from "../middlewares/validateResource";
 import {
@@ -12,6 +13,7 @@ import {
   createProductsSchema,
   editProductsSchema,
   getProductsSchema,
+  saleProductSchema,
 } from "../schema/product.schema";
 import revalidateAccessToken from "../middlewares/revalidateAccessToken";
 import requiredUser from "../middlewares/requiredUser";
@@ -24,6 +26,13 @@ export default function (router: Router) {
     validateResource(createProductsSchema),
     createProductHandler
   );
+  router.post(
+    "/api/v1/products/sale/:productId",
+    revalidateAccessToken,
+    requiredUser,
+    validateResource(saleProductSchema),
+    saleProductHandler
+  );
   router.put(
     "/api/v1/products/:productId",
     revalidateAccessToken,
@@ -31,13 +40,13 @@ export default function (router: Router) {
     validateResource(editProductsSchema),
     editProductHandler
   );
-  // router.delete(
-  //   "/api/v1/products/:productId",
-  //   revalidateAccessToken,
-  //   requiredUser,
-  //   validateResource(actionProductSchema),
-  //   deleteProductHandler
-  // );
+  router.delete(
+    "/api/v1/products/:productId",
+    revalidateAccessToken,
+    requiredUser,
+    validateResource(actionProductSchema),
+    deleteProductHandler
+  );
   router.get(
     "/api/v1/products",
     revalidateAccessToken,

@@ -5,12 +5,14 @@ import {
   editProduct,
   getProducts,
   getRandomProduct,
+  saleProduct,
 } from "../services/product.service";
 import {
   ActionProductInput,
   CreateProductsInput,
   EditProductInput,
   GetProductsInput,
+  SaleProductInput,
 } from "../schema/product.schema";
 
 export async function createProductHandler(
@@ -78,6 +80,22 @@ export async function editProductHandler(
     return res
       .status(200)
       .json({ status: 200, message: "successfully edited the products" })
+      .end();
+  } catch (e: any) {
+    return res.status(500).json({ status: 500, error: e.message }).end();
+  }
+}
+
+export async function saleProductHandler(
+  req: Request<SaleProductInput["params"], {}, SaleProductInput["body"]>,
+  res: Response
+) {
+  try {
+    await saleProduct(req.params.productId, req.body.quantity);
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "successfully sale this product" })
       .end();
   } catch (e: any) {
     return res.status(500).json({ status: 500, error: e.message }).end();

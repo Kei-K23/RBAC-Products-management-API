@@ -14,7 +14,9 @@ export async function createProduct(payload: CreateProductsInput) {
 export async function getProducts(limit = 1) {
   try {
     const limitDoc = limit * 10;
-    const products = await ProductModel.find().limit(limitDoc);
+    const products = await ProductModel.find({ quantity: { $gt: 0 } }).limit(
+      limitDoc
+    );
     if (!products.length) return false;
     return products;
   } catch (e: any) {
@@ -35,6 +37,29 @@ export async function editProduct(
   }
 }
 
+export async function saleProduct(productId: string, quantity = 1) {
+  try {
+    const product = await getProductBy({ _id: productId });
+    if (!product) throw new Error("could not update products!");
+
+    const newQuantity = product[0].quantity - quantity;
+
+    if (newQuantity < 0)
+      throw new Error("no enough quantity for this product to sale");
+
+    const editedProduct = await ProductModel.findOneAndUpdate(
+      { _id: productId },
+      {
+        quantity: newQuantity,
+      }
+    );
+
+    return editedProduct;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
 export async function deleteProduct(id: string) {
   try {
     await ProductModel.findOneAndDelete({ _id: id });
@@ -45,11 +70,24 @@ export async function deleteProduct(id: string) {
 
 export async function getRandomProduct() {
   try {
-    const products = await ProductModel.find();
+    const products = await ProductModel.find({ quantity: { $gt: 0 } });
     if (!products.length) return false;
     const random = randomNumber(products.length);
     const randomProduct = products[random];
     return randomProduct;
+  } catch (e: any) {
+    throw new Error(e.message.toString());
+  }
+}
+
+export async function getProductBy(filter: FilterQuery<ProductDocument>) {
+  try {
+    const product = await ProductModel.find({
+      ...filter,
+      quantity: { $gt: 0 },
+    });
+    if (!product.length) return false;
+    return product;
   } catch (e: any) {
     throw new Error(e.message.toString());
   }

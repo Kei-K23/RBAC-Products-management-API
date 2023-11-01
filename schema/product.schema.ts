@@ -93,6 +93,18 @@ export const editProductsSchema = z.object({
   }),
 });
 
+export const saleProductSchema = z.object({
+  body: z.object({
+    quantity: z.number().optional().default(1),
+  }),
+  params: z.object({
+    productId: z.string({
+      required_error: "product id is required!",
+      invalid_type_error: "product id must be string",
+    }),
+  }),
+});
+
 export const actionProductSchema = z.object({
   params: z.object({
     productId: z.string({
@@ -106,3 +118,4 @@ export type CreateProductsInput = z.infer<typeof createProductsSchema>["body"];
 export type GetProductsInput = z.infer<typeof getProductsSchema>["query"];
 export type EditProductInput = z.infer<typeof editProductsSchema>;
 export type ActionProductInput = z.infer<typeof actionProductSchema>["params"];
+export type SaleProductInput = z.infer<typeof saleProductSchema>;
